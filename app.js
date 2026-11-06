@@ -3,7 +3,7 @@
 // На этапе разработки укажите URL вашего туннеля (ngrok / cloudflared),
 // а после деплоя — домен вашего сервера.
 // =====================================================================
-const API_BASE_URL = "https://reward-opinions-discrete-science.trycloudflare.com";
+const API_BASE_URL = "https://prayers-boats-receptor-ultra.trycloudflare.com";
 
 const tg = window.Telegram.WebApp;
 tg.expand();
