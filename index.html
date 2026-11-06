@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Secret Santa 2026</title>
+  <!-- Шрифт Inter для точного попадания в референс -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Официальный скрипт Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- Генератор QR-кодов на клиенте -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Верхняя шапка как на референсе -->
+    <header class="top-bar">
+      <button class="icon-btn" id="btn-close" title="Закрыть">←</button>
+      <div class="brand-logo">wishary</div>
+      <button class="icon-btn" id="btn-top-settings" title="Настройки">⚙️</button>
+    </header>
+
+    <!-- ================= ВКЛАДКА 1: ГЛАВНАЯ (ИГРА) ================= -->
+    <main id="tab-home" class="tab-view active">
+      <section class="hero-section">
+        <div class="santa-avatar">🎅</div>
+        <h1 class="main-title">Secret Santa 2026</h1>
+
+        <!-- Бейджи дат и бюджета -->
+        <div class="meta-badges">
+          <div class="meta-col">
+            <span class="meta-label">End date</span>
+            <span class="dark-pill">25 DECEMBER</span>
+          </div>
+          <div class="meta-col">
+            <span class="meta-label">Gift budget</span>
+            <span class="dark-pill">500 - 2000 ₽</span>
+          </div>
+        </div>
+
+        <p class="hero-description">
+          Мы собрались вместе, чтобы подарить друг другу немного новогоднего волшебства. Оставьте свои пожелания и держите имя получателя в секрете!
+        </p>
+
+        <!-- Счетчик участников -->
+        <div class="participants-pill">
+          <span class="participants-title">Participants</span>
+          <span id="stat-total" class="participants-count">0</span>
+          <div class="avatar-stack">
+            <span class="mini-ava">🎄</span>
+            <span class="mini-ava">🦌</span>
+            <span class="mini-ava">⛄</span>
+            <span class="mini-ava">🎁</span>
+          </div>
+        </div>
+        <p class="sub-counter">
+          <span id="stat-wishes">0</span> из <span id="stat-total-sub">0</span> заполнили письмо Санте
+        </p>
+
+        <!-- Панель главных кнопок действий (меняется в зависимости от этапа игры) -->
+        <div class="action-buttons-row">
+          <!-- Кнопка запуска жеребьевки (видна админу до жеребьевки) -->
+          <button id="btn-admin-draw" class="primary-dark-btn hidden">
+            ✨ Start the draw
+          </button>
+
+          <!-- Кнопка сдачи подарка по QR (появляется после жеребьевки) -->
+          <button id="btn-dropoff-qr" class="primary-dark-btn hidden">
+            📦 Сдать подарок (QR)
+          </button>
+
+          <!-- Кнопка получения подарка по QR (когда подарок ждет в пункте выдачи) -->
+          <button id="btn-pickup-qr" class="orange-action-btn hidden">
+            🎁 Забрать свой подарок (QR)
+          </button>
+
+          <!-- Кнопка Поделиться -->
+          <button id="btn-share" class="share-square-btn" title="Пригласить друзей">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Карточка-открытка: МОЕ ПИСЬМО САНТЕ -->
+      <section class="postcard-section">
+        <h2 class="section-heading">Letter to Santa</h2>
+        <div class="postcard">
+          <div class="postcard-left">
+            <div class="stamp-avatar">
+              <img id="user-photo" src="https://placehold.co/80x80/e8e4dc/222?text=🎅" alt="Avatar" />
+            </div>
+            <div class="postcard-line">
+              <span class="muted">To</span> <strong>Santa</strong>
+            </div>
+            <div class="postcard-line">
+              <span class="muted">From</span> <strong id="user-name">...</strong>
+            </div>
+          </div>
+
+          <div class="postcard-divider"></div>
+
+          <div class="postcard-right">
+            <textarea
+              id="wishes-input"
+              placeholder="✏️ Напишите свои пожелания к подарку..."
+              rows="4"
+            ></textarea>
+          </div>
+
+          <button id="btn-save-wishes" class="floating-wish-btn">
+            + Save wishes
+          </button>
+        </div>
+      </section>
+
+      <!-- Карточка ПОДОПЕЧНОГО (появляется после проведения жеребьевки) -->
+      <section id="recipient-section" class="postcard-section hidden">
+        <h2 class="section-heading">Ваш подопечный 🎄</h2>
+        <div class="postcard recipient-card">
+          <div class="postcard-left">
+            <div class="stamp-avatar">🎁</div>
+            <div class="postcard-line">
+              <span class="muted">Кому</span> <strong id="rec-name">...</strong>
+            </div>
+            <div class="postcard-line">
+              <span class="muted">Статус</span> <strong id="rec-status">Готовится</strong>
+            </div>
+          </div>
+          <div class="postcard-divider"></div>
+          <div class="postcard-right">
+            <p id="rec-wishes" class="recipient-wishes-text"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= ВКЛАДКА 2: НАСТРОЙКИ И АККАУНТ ================= -->
+    <main id="tab-settings" class="tab-view">
+      <h2 class="section-heading">Настройки и аккаунт</h2>
+      <div class="settings-card">
+        <div class="settings-row">
+          <span>Ваше имя</span>
+          <strong id="set-name">-</strong>
+        </div>
+        <div class="settings-row">
+          <span>Telegram ID</span>
+          <strong id="set-id">-</strong>
+        </div>
+        <div class="settings-row">
+          <span>Роль в игре</span>
+          <strong id="set-role" class="role-badge">Участник</strong>
+        </div>
+        <div class="settings-row">
+          <span>Статус вашего подарка</span>
+          <strong id="set-gift-status">Ожидание жеребьевки</strong>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h3>Правила анонимного обмена</h3>
+        <ul class="rules-list">
+          <li>1. Заполните свои пожелания в письме Санте.</li>
+          <li>2. После жеребьевки приготовьте подарок для своего подопечного.</li>
+          <li>3. Принесите подарок в пункт приема и покажите одноразовый QR-код сотруднику.</li>
+          <li>4. Когда ваш Тайный Санта сдаст подарок для вас, бот пришлет уведомление — заберите его по QR-коду!</li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- ================= МОДАЛЬНОЕ ОКНО ОДНОРАЗОВОГО QR-КОДА ================= -->
+    <div id="qr-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 id="qr-modal-title">Ваш одноразовый QR-код</h3>
+        <p id="qr-modal-subtitle" class="modal-sub">Покажите этот код сотруднику пункта приема/выдачи</p>
+        <div id="qrcode-box" class="qrcode-container"></div>
+        <!-- Резервный код под QR на случай, если камера не сфокусируется -->
+        <div class="backup-code-box">
+          <span>Резервный код для ручного ввода:</span>
+          <strong id="qr-backup-code">--------</strong>
+        </div>
+        <p id="qr-cooldown-note" class="cooldown-note"></p>
+        <button id="btn-close-qr" class="primary-dark-btn full-width">Закрыть</button>
+      </div>
+    </div>
+
+    <!-- ================= МОДАЛЬНОЕ ОКНО СОТРУДНИКА ПУНКТА (СКАНЕР + РУЧНОЙ ВВОД) ================= -->
+    <div id="staff-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3>Панель пункта выдачи 📦</h3>
+        <p class="modal-sub">Отсканируйте QR-код участника или введите 8-значный резервный код</p>
+
+        <button id="btn-open-native-scanner" class="orange-action-btn full-width">
+          📷 Открыть камеру QR-сканера
+        </button>
+
+        <div class="manual-input-group">
+          <input type="text" id="staff-manual-code" placeholder="Резервный код (например: 48291034)" />
+          <button id="btn-submit-manual-code" class="primary-dark-btn">Проверить</button>
+        </div>
+
+        <!-- Блок результата сканирования (показывает номер коробки) -->
+        <div id="staff-result-box" class="staff-result hidden">
+          <div class="box-number-title">НОМЕР КОРОБКИ:</div>
+          <div id="staff-box-number" class="box-number-huge">#00000</div>
+          <p id="staff-instruction"></p>
+        </div>
+
+        <button id="btn-close-staff" class="secondary-btn full-width">Закрыть</button>
+      </div>
+    </div>
+
+    <!-- ================= НИЖНИЙ HOMEBAR + КНОПКА QR ДЛЯ ПЕРСОНАЛА СПРАВА ================= -->
+    <div class="bottom-nav-wrapper">
+      <nav class="homebar">
+        <button class="nav-tab active" data-target="tab-home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Главная</span>
+        </button>
+        <button class="nav-tab" data-target="tab-settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Настройки</span>
+        </button>
+      </nav>
+
+      <!-- Кнопка сканера QR справа от homebar, почти у края экрана (ТОЛЬКО для админа и персонала) -->
+      <button id="btn-staff-scanner" class="staff-qr-fab hidden" title="Сканировать QR">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+          <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+          <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+          <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+          <rect x="7" y="7" width="3" height="3"></rect>
+          <rect x="14" y="7" width="3" height="3"></rect>
+          <rect x="7" y="14" width="3" height="3"></rect>
+          <path d="M14 14h3v3"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+:root {
+  --bg-page: #F7F5F0;
+  --bg-pill: #ECE8DF;
+  --card-bg: #FCFBF8;
+  --text-main: #1E1E1E;
+  --text-muted: #7C7870;
+  --accent-orange: #EC5328;
+  --dark-btn: #232323;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding-bottom: 100px; /* Место под нижний homebar */
+}
+
+.app-container {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Шапка */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.brand-logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent-orange);
+  letter-spacing: -0.5px;
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--bg-pill);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Главный блок (Hero) */
+.hero-section {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.santa-avatar {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
+}
+
+.main-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.meta-badges {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.meta-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.meta-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.dark-pill {
+  background: var(--dark-btn);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.hero-description {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4A4843;
+  max-width: 340px;
+  margin: 0 auto 18px;
+}
+
+/* Плашка участников */
+.participants-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-pill);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+}
+
+.participants-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.participants-count {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.avatar-stack {
+  display: flex;
+}
+
+.mini-ava {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  margin-left: -6px;
+  border: 2px solid var(--bg-pill);
+}
+
+.sub-counter {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* Кнопки действий */
+.action-buttons-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primary-dark-btn {
+  background: var(--dark-btn);
+  color: #fff;
+  border: none;
+  padding: 13px 22px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.orange-action-btn {
+  background: var(--accent-orange);
+  color: #fff;
+  border: none;
+  padding: 13px 22px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(236, 83, 40, 0.3);
+}
+
+.share-square-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: none;
+  background: var(--accent-orange);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Открытка "Letter to Santa" */
+.postcard-section {
+  margin-bottom: 32px;
+}
+
+.section-heading {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.postcard {
+  position: relative;
+  display: flex;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #EAE5DC;
+  transform: rotate(-0.6deg);
+}
+
+.postcard-left {
+  width: 42%;
+  padding-right: 12px;
+}
+
+.stamp-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px dashed #C5BKT2;
+  padding: 3px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  overflow: hidden;
+}
+
+.stamp-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postcard-line {
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px solid #E2DDD3;
+}
+
+.postcard-line .muted {
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.postcard-divider {
+  width: 1px;
+  background: #DCD6CA;
+  margin: 4px 12px;
+}
+
+.postcard-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+#wishes-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-main);
+  resize: none;
+  outline: none;
+}
+
+.floating-wish-btn {
+  position: absolute;
+  right: 14px;
+  bottom: -16px;
+  background: var(--accent-orange);
+  color: #fff;
+  border: none;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 6px 16px rgba(236, 83, 40, 0.35);
+  cursor: pointer;
+}
+
+/* Вкладки и Настройки */
+.tab-view {
+  display: none;
+}
+
+.tab-view.active {
+  display: block;
+}
+
+.settings-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #EAE5DC;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #EFECE6;
+  font-size: 14px;
+}
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+.rules-list {
+  list-style: none;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4A4843;
+}
+
+/* Модальные окна */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+}
+
+.modal-card {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 380px;
+  border-radius: 24px;
+  padding: 22px;
+  text-align: center;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 8px 0 16px;
+}
+
+.qrcode-container {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  background: #fff;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+
+.backup-code-box {
+  background: var(--bg-pill);
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.backup-code-box strong {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.cooldown-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.secondary-btn {
+  background: var(--bg-pill);
+  color: var(--text-main);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.manual-input-group {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.manual-input-group input {
+  flex: 1;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid #D6D0C4;
+  font-size: 14px;
+}
+
+.staff-result {
+  background: #E9F7EF;
+  border: 2px solid #27AE60;
+  border-radius: 16px;
+  padding: 14px;
+  margin: 12px 0;
+}
+
+.box-number-huge {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1E8449;
+  margin: 4px 0;
+}
+
+/* Нижний Homebar + Плавающая кнопка QR у правого края */
+.bottom-nav-wrapper {
+  position: fixed;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.homebar {
+  pointer-events: auto;
+  display: flex;
+  background: rgba(35, 35, 35, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #A0A0A0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav-tab.active {
+  background: #fff;
+  color: var(--text-main);
+}
+
+/* Кнопка сканера QR для персонала: справа от homebar, почти у края экрана */
+.staff-qr-fab {
+  pointer-events: auto;
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent-orange);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(236, 83, 40, 0.45);
+  cursor: pointer;
+}
